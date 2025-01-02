@@ -1,0 +1,133 @@
+/* percentage-styles.css */
+
+/* Container for the percentage visualization */
+.percentage-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 200px;
+  position: relative;
+}
+
+/* Progress bar base */
+.progress-bar {
+  flex-grow: 1;
+  height: 24px;
+  background: #f1f5f9;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Progress bar fill */
+.progress-fill {
+  height: 100%;
+  width: var(--progress-width);
+  transition: width 0.3s ease;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Color variations based on percentage */
+.progress-fill[data-percentage="low"] {
+  background: #94a3b8;
+}
+
+.progress-fill[data-percentage="medium"] {
+  background: #eab308;
+}
+
+.progress-fill[data-percentage="high"] {
+  background: #3b82f6;
+}
+
+.progress-fill[data-percentage="super"] {
+  background: #22c55e;
+  animation: pulse 2s infinite;
+}
+
+/* Percentage text */
+.percentage-text {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+  z-index: 1;
+}
+
+/* Success indicator for high percentages */
+.success-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.success-indicator::after {
+  content: "↑";
+  color: #22c55e;
+  font-weight: bold;
+}
+
+/* Tooltip for exact value */
+.percentage-cell:hover::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1f2937;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.percentage-cell:hover::before {
+  opacity: 1;
+}
+
+/* Pulse animation for super successful projects */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .percentage-cell {
+    min-width: 150px;
+  }
+
+  .progress-bar {
+    height: 20px;
+  }
+
+  .success-indicator {
+    width: 20px;
+    height: 20px;
+  }
+
+  .percentage-text {
+    font-size: 12px;
+  }
+}

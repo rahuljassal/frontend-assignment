@@ -1,7 +1,9 @@
+// ProjectTable.jsx
 import React, { useState } from "react";
 import "./ProjectTable.css";
+import "./PercentageStyles.css"; // Add this new import
 
-export const ProjectTable = ({ data = [] }) => {
+const ProjectTable = ({ data = [] }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
 
@@ -10,12 +12,26 @@ export const ProjectTable = ({ data = [] }) => {
   const endIndex = startIndex + itemsPerPage;
   const currentData = data.slice(startIndex, endIndex);
 
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
+  // Helper functions for percentage visualization
+  const calculateProgressWidth = (percentage) => {
+    if (percentage <= 0) return 0;
+    const logValue = Math.log10(percentage);
+    const logMax = Math.log10(28000); // Slightly above max
+    return Math.min((logValue / logMax) * 100, 100);
+  };
+
+  const getPercentageCategory = (percentage) => {
+    if (percentage >= 1000) return "super";
+    if (percentage >= 100) return "high";
+    if (percentage >= 50) return "medium";
+    return "low";
+  };
+
+  const formatPercentage = (percentage) => {
+    if (percentage >= 1000) {
+      return `${(percentage / 1000).toFixed(1)}k%`;
     }
-    return pageNumbers;
+    return `${percentage}%`;
   };
 
   return (
@@ -41,23 +57,29 @@ export const ProjectTable = ({ data = [] }) => {
               <tr key={project["s.no"]}>
                 <td>{project["s.no"] + 1}</td>
                 <td>
-                  <div className="progress-wrapper" role="presentation">
-                    <div
-                      className="progress-bar"
-                      style={{
-                        width: `${Math.min(
-                          project["percentage.funded"],
-                          100
-                        )}%`,
-                      }}
-                      role="progressbar"
-                      aria-valuenow={project["percentage.funded"]}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                    <span className="progress-text">
-                      {project["percentage.funded"]}%
-                    </span>
+                  <div
+                    className="percentage-cell"
+                    data-tooltip={`Exact: ${project["percentage.funded"]}%`}
+                  >
+                    <div className="progress-bar">
+                      <div
+                        className="progress-fill"
+                        data-percentage={getPercentageCategory(
+                          project["percentage.funded"]
+                        )}
+                        style={{
+                          "--progress-width": `${calculateProgressWidth(
+                            project["percentage.funded"]
+                          )}%`,
+                        }}
+                      />
+                      <span className="percentage-text">
+                        {formatPercentage(project["percentage.funded"])}
+                      </span>
+                    </div>
+                    {project["percentage.funded"] >= 1000 && (
+                      <div className="success-indicator" />
+                    )}
                   </div>
                 </td>
                 <td>${project["amt.pledged"]?.toLocaleString()}</td>
@@ -75,6 +97,7 @@ export const ProjectTable = ({ data = [] }) => {
         </table>
       </div>
 
+      {/* Pagination remains the same */}
       <nav className="pagination" aria-label="Pagination">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -86,20 +109,22 @@ export const ProjectTable = ({ data = [] }) => {
         </button>
 
         <div className="page-numbers" role="group" aria-label="Page numbers">
-          {getPageNumbers().map((pageNum) => (
-            <button
-              key={pageNum}
-              onClick={() => setCurrentPage(pageNum)}
-              aria-current={currentPage === pageNum ? "page" : undefined}
-              aria-label={`Page ${pageNum}`}
-              data-testid={`page-${pageNum}-button`}
-              className={`page-number ${
-                currentPage === pageNum ? "active" : ""
-              }`}
-            >
-              {pageNum}
-            </button>
-          ))}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+            (pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => setCurrentPage(pageNum)}
+                aria-current={currentPage === pageNum ? "page" : undefined}
+                aria-label={`Page ${pageNum}`}
+                data-testid={`page-${pageNum}-button`}
+                className={`page-number ${
+                  currentPage === pageNum ? "active" : ""
+                }`}
+              >
+                {pageNum}
+              </button>
+            )
+          )}
         </div>
 
         <button
