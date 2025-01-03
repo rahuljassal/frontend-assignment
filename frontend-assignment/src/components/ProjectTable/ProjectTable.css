@@ -94,7 +94,7 @@ tr:hover {
   display: flex;
   gap: 0.5rem;
   overflow: scroll;
-  width: 80%;
+  width: 90%;
 }
 
 .page-number {

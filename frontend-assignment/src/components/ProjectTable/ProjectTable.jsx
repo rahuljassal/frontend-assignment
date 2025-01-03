@@ -2,6 +2,11 @@
 import React, { useState } from "react";
 import "./ProjectTable.css";
 import "./PercentageStyles.css"; // Add this new import
+import {
+  calculateProgressWidth,
+  formatPercentage,
+  getPercentageCategory,
+} from "./utils";
 
 const ProjectTable = ({ data = [] }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,28 +16,6 @@ const ProjectTable = ({ data = [] }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = data.slice(startIndex, endIndex);
-
-  // Helper functions for percentage visualization
-  const calculateProgressWidth = (percentage) => {
-    if (percentage <= 0) return 0;
-    const logValue = Math.log10(percentage);
-    const logMax = Math.log10(28000); // Slightly above max
-    return Math.min((logValue / logMax) * 100, 100);
-  };
-
-  const getPercentageCategory = (percentage) => {
-    if (percentage >= 1000) return "super";
-    if (percentage >= 100) return "high";
-    if (percentage >= 50) return "medium";
-    return "low";
-  };
-
-  const formatPercentage = (percentage) => {
-    if (percentage >= 1000) {
-      return `${(percentage / 1000).toFixed(1)}k%`;
-    }
-    return `${percentage}%`;
-  };
 
   return (
     <div
@@ -72,6 +55,8 @@ const ProjectTable = ({ data = [] }) => {
                             project["percentage.funded"]
                           )}%`,
                         }}
+                        aria-valuenow={project["percentage.funded"]}
+                        role="progressbar"
                       />
                       <span className="percentage-text">
                         {formatPercentage(project["percentage.funded"])}
