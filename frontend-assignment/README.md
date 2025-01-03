@@ -56,16 +56,18 @@ The application fetches project data from the following API:
 
 ## Project Structure
 
+```bash
 frontend-assignment/
 ├── src/
-│ ├── App.jsx # Main application component
-│ ├── components/ # Contains all React components
-│ │ ├── ProjectTable/ # ProjectTable component and its styles
-│ │ ├── ProjectTable.css # Styles for ProjectTable
-│ │ ├── PercentageStyles.css # Styles for percentage visualization
-│ │ └── tests/ # Unit tests for components
-│ ├── test/ # Test setup and configurations
-│ ├── App.css # Global styles
-│ └── index.js # Entry point of the application
-├── package.json # Project metadata and dependencies
-└── README.md # Project documentation
+│   ├── App.jsx           # Main application component
+│   ├── components/       # Contains all React components
+│   │   ├── ProjectTable/ # ProjectTable component and its styles
+│   │   ├── ProjectTable.css
+│   │   ├── PercentageStyles.css
+│   │   └── tests/       # Unit tests for components
+│   ├── test/            # Test setup and configurations
+│   ├── App.css          # Global styles
+│   └── index.js         # Entry point of the application
+├── package.json         # Project metadata and dependencies
+└── README.md           # Project documentation
+```
