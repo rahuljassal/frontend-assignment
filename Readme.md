@@ -1,50 +1,71 @@
 # Frontend Assignment
 
+## Overview
 
-## Assignment
+This project is a React-based application that displays a table of Kickstarter projects, showcasing their funding status, amount pledged, and other relevant details. The application fetches data from a public API and implements pagination for better user experience.
 
-You are required to fetch the details of the highly-rated kickstarter projects by implementing an AJAX call to their APIs.
+## Features
 
-Use the web API (link : https://raw.githubusercontent.com/saaslabsco/frontend-assignment/refs/heads/master/frontend-assignment.json) ) to fetch the details of specific projects.
+- **Dynamic Data Fetching**: Utilizes AJAX calls to fetch project data from a remote API.
+- **Responsive Design**: The UI is designed to be aesthetically pleasing and responsive across various devices.
+- **Pagination**: Implements pagination to display a maximum of 5 records per page.
+- **Accessibility**: Ensures that the application is accessible, with appropriate ARIA labels and keyboard navigation support.
+- **Unit Testing**: Includes unit tests to verify the functionality of components and features.
 
-## Minimum Requirements
+## Getting Started
 
-1. Create a table and list the following three attributes for all the projects:
-    * S.No.
-    * Percentage funded
-    * Amount pledged
+### Prerequisites
 
-1. Ensure that the UI is aesthetically pleasing to gain extra points.
-1. Implement pagination with maximum 5 records per page.
-1. UX should remain like you would see on an ecommerce website (Amazon, Flipkart, etc.) and edge cases should not break
+- Node.js (version 14 or higher)
+- npm (Node package manager)
 
-### Expected Output format
+### Installation
 
-| **S.No.** | **Percentage funded** | **Amount pledged** |
-|-----------|-----------------------|--------------------|
-| 0         | 186                   | 15283              |
+1. Clone the repository:
 
+   ```bash
+   git clone https://github.com/rahuljassal/frontend-assignment.git
+   cd frontend-assignment
+   ```
 
-## Good to have
+2. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-1. Unit tests.
-1. Accessibility.
+### Running the Application
 
+3. To start the development server, run:
+   ```bash
+   npm run dev
+   ```
+   Open your browser and navigate to `http://localhost:3000` to view the application.
 
-## Steps for submission
+### Running Tests
 
-1. Fork this repo.
-1. Do changes to the above assignment.
-1. Email the assignment back to us with:
-    1. Link of the open source repo.
-    1. Link of the assignment hosted online. (You can use any free tools to host this assignment, eg. vercel, netlify or heroku). It should be accessible online for atleast 7 days.
+4. To run the unit tests, use:
+   ```bash
+   npm run test
+   ```
 
+## API
 
-## Frameworks Allowed
-1. React/Vanilla JS for JavaScript
-1. No framework for CSS. Only Raw CSS is allowed.
+The application fetches project data from the following API:
 
-## Note
+- **URL**: [Kickstarter Projects API](https://raw.githubusercontent.com/saaslabsco/frontend-assignment/refs/heads/master/frontend-assignment.json)
 
-1. Result on platforms like codesandbox, replit are not accepted. 
-1. Private unaccessible links will lead to rejection.
+## Project Structure
+
+frontend-assignment/
+├── src/
+│ ├── App.jsx # Main application component
+│ ├── components/ # Contains all React components
+│ │ ├── ProjectTable/ # ProjectTable component and its styles
+│ │ ├── ProjectTable.css # Styles for ProjectTable
+│ │ ├── PercentageStyles.css # Styles for percentage visualization
+│ │ └── tests/ # Unit tests for components
+│ ├── test/ # Test setup and configurations
+│ ├── App.css # Global styles
+│ └── index.js # Entry point of the application
+├── package.json # Project metadata and dependencies
+└── README.md # Project documentation
