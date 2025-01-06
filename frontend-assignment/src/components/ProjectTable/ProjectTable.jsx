@@ -1,4 +1,3 @@
-// ProjectTable.jsx
 import React, { useState } from "react";
 import "./ProjectTable.css";
 import "./PercentageStyles.css"; // Add this new import
